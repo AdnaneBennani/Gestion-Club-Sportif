@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('payments/overdue', [PaymentController::class, 'overdue']);
         Route::apiResource('payments', PaymentController::class);
         Route::get('members/{member}/payments', [PaymentController::class, 'memberHistory']);
+
+        // M3 — Trainings (RG-03: coach scoped to own team)
+        Route::apiResource('trainings', TrainingController::class);
 
     });
 });
