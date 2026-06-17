@@ -5,8 +5,10 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import MembersList from './pages/Members/MembersList'
 import MemberForm from './pages/Members/MemberForm'
+import TeamsList from './pages/Teams/TeamsList'
+import TeamForm from './pages/Teams/TeamForm'
+import TeamMembers from './pages/Teams/TeamMembers'
 
-// Placeholder pour les modules à venir
 function ComingSoon({ title }) {
   return (
     <div className="flex h-64 items-center justify-center">
@@ -35,8 +37,13 @@ export default function App() {
             <Route path="/membres/creer" element={<MemberForm />} />
             <Route path="/membres/:id/modifier" element={<MemberForm />} />
 
+            {/* M2 — Équipes */}
+            <Route path="/equipes" element={<TeamsList />} />
+            <Route path="/equipes/creer" element={<TeamForm />} />
+            <Route path="/equipes/:id/modifier" element={<TeamForm />} />
+            <Route path="/equipes/:id/membres" element={<TeamMembers />} />
+
             {/* Placeholders */}
-            <Route path="/equipes" element={<ComingSoon title="Équipes" />} />
             <Route path="/entrainements" element={<ComingSoon title="Entraînements" />} />
             <Route path="/paiements" element={<ComingSoon title="Paiements" />} />
           </Route>
