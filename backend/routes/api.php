@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TeamController;
@@ -49,6 +50,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // M3 — Trainings (RG-03: coach scoped to own team)
         Route::apiResource('trainings', TrainingController::class);
+
+        // M6 — Dashboard KPIs (admin: global | coach: team-scoped)
+        Route::get('dashboard', [DashboardController::class, 'index']);
 
     });
 });
