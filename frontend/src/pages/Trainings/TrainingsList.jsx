@@ -59,14 +59,14 @@ function TrainingRow({ training, onEdit, onDelete }) {
   return (
     <div className={`flex flex-col gap-3 rounded-xl border px-5 py-4 sm:flex-row sm:items-center sm:justify-between ${upcoming ? 'border-slate-200 bg-white' : 'border-slate-100 bg-slate-50 opacity-70'}`}>
       {/* Date block */}
-      <div className="flex shrink-0 flex-col items-center justify-center rounded-xl bg-indigo-50 px-4 py-3 text-center w-16">
-        <span className="text-xs font-semibold uppercase text-indigo-400">
+      <div className="flex shrink-0 flex-col items-center justify-center rounded-xl bg-navy-50 px-4 py-3 text-center w-16">
+        <span className="text-xs font-semibold uppercase text-brand-blue-400">
           {new Date(training.date).toLocaleDateString('fr-FR', { month: 'short' })}
         </span>
-        <span className="text-2xl font-bold text-indigo-700 leading-tight">
+        <span className="text-2xl font-bold text-navy-700 leading-tight">
           {new Date(training.date).getDate()}
         </span>
-        <span className="text-xs text-indigo-400">
+        <span className="text-xs text-brand-blue-400">
           {new Date(training.date).getFullYear()}
         </span>
       </div>
@@ -103,7 +103,7 @@ function TrainingRow({ training, onEdit, onDelete }) {
       <div className="flex shrink-0 items-center gap-1 self-end sm:self-auto">
         <button
           onClick={() => onEdit(training.id)}
-          className="rounded-lg p-1.5 text-slate-400 hover:bg-indigo-50 hover:text-indigo-600"
+          className="rounded-lg p-1.5 text-slate-400 hover:bg-navy-50 hover:text-navy-700"
           title="Modifier"
         >
           <Pencil size={15} />
@@ -196,7 +196,7 @@ export default function TrainingsList() {
         </div>
         <Link
           to="/entrainements/creer"
-          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+          className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
         >
           <Plus size={16} />
           Planifier
@@ -215,7 +215,7 @@ export default function TrainingsList() {
             <button
               key={value}
               onClick={() => { setPage(1); setFilterPeriod(value) }}
-              className={`px-4 py-2 font-medium transition ${filterPeriod === value ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
+              className={`px-4 py-2 font-medium transition ${filterPeriod === value ? 'bg-orange-500 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
             >
               {label}
             </button>
@@ -227,7 +227,7 @@ export default function TrainingsList() {
           <select
             value={filterTeam}
             onChange={(e) => { setPage(1); setFilterTeam(e.target.value) }}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
           >
             <option value="">Toutes les équipes</option>
             {teams.map((t) => (
@@ -240,7 +240,7 @@ export default function TrainingsList() {
       {/* Content */}
       {isLoading ? (
         <div className="flex h-48 items-center justify-center">
-          <Loader2 size={28} className="animate-spin text-indigo-400" />
+          <Loader2 size={28} className="animate-spin text-brand-blue-400" />
         </div>
       ) : trainings.length === 0 ? (
         <div className="flex h-48 flex-col items-center justify-center gap-2 text-slate-400">

@@ -106,7 +106,7 @@ export default function MembersList() {
         </div>
         <Link
           to="/membres/creer"
-          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+          className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
         >
           <Plus size={16} />
           Ajouter un membre
@@ -129,7 +129,7 @@ export default function MembersList() {
       <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
         {isLoading ? (
           <div className="flex h-48 items-center justify-center">
-            <Loader2 size={28} className="animate-spin text-indigo-400" />
+            <Loader2 size={28} className="animate-spin text-brand-blue-400" />
           </div>
         ) : members.length === 0 ? (
           <div className="flex h-48 flex-col items-center justify-center gap-2 text-slate-400">
@@ -153,7 +153,7 @@ export default function MembersList() {
                   <tr key={m.id} className="hover:bg-slate-50">
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600">
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-navy-100 text-xs font-bold text-navy-700">
                           {m.first_name[0]}{m.last_name[0]}
                         </div>
                         <span className="font-medium text-slate-800">{m.full_name}</span>
@@ -172,7 +172,7 @@ export default function MembersList() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => navigate(`/membres/${m.id}/modifier`)}
-                          className="rounded-lg p-1.5 text-slate-400 hover:bg-indigo-50 hover:text-indigo-600"
+                          className="rounded-lg p-1.5 text-slate-400 hover:bg-navy-50 hover:text-navy-700"
                           title="Modifier"
                         >
                           <Pencil size={15} />

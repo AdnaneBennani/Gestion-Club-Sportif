@@ -52,7 +52,7 @@ const CATEGORY_COLORS = {
   Minime: 'bg-yellow-100 text-yellow-700',
   Cadet: 'bg-lime-100 text-lime-700',
   Junior: 'bg-emerald-100 text-emerald-700',
-  Senior: 'bg-indigo-100 text-indigo-700',
+  Senior: 'bg-navy-100 text-navy-700',
 }
 
 function CategoryBadge({ category }) {
@@ -108,7 +108,7 @@ export default function TeamsList() {
         </div>
         <Link
           to="/equipes/creer"
-          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+          className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
         >
           <Plus size={16} />
           Nouvelle équipe
@@ -118,7 +118,7 @@ export default function TeamsList() {
       {/* Content */}
       {isLoading ? (
         <div className="flex h-48 items-center justify-center">
-          <Loader2 size={28} className="animate-spin text-indigo-400" />
+          <Loader2 size={28} className="animate-spin text-brand-blue-400" />
         </div>
       ) : teams.length === 0 ? (
         <div className="flex h-48 flex-col items-center justify-center gap-2 text-slate-400">
@@ -144,8 +144,8 @@ export default function TeamsList() {
                     {/* Nom */}
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100">
-                          <ShieldHalf size={15} className="text-indigo-600" />
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-navy-100">
+                          <ShieldHalf size={15} className="text-navy-700" />
                         </div>
                         <span className="font-medium text-slate-800">{team.name}</span>
                       </div>
@@ -179,7 +179,7 @@ export default function TeamsList() {
                         </button>
                         <button
                           onClick={() => navigate(`/equipes/${team.id}/modifier`)}
-                          className="rounded-lg p-1.5 text-slate-400 hover:bg-indigo-50 hover:text-indigo-600"
+                          className="rounded-lg p-1.5 text-slate-400 hover:bg-navy-50 hover:text-navy-700"
                           title="Modifier"
                         >
                           <Pencil size={15} />

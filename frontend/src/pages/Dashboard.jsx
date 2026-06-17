@@ -11,14 +11,12 @@ import api from '../lib/axios'
 function KpiCard({ label, value, icon: Icon, iconBg, iconColor, sub, subColor, to, alert }) {
   const inner = (
     <div className={`relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 transition-shadow hover:shadow-md ${alert ? 'ring-red-200' : 'ring-slate-200'}`}>
-      {/* Alert stripe */}
       {alert && <div className="absolute left-0 top-0 h-full w-1 rounded-l-2xl bg-red-400" />}
 
       <div className="flex items-start justify-between">
-        {/* Text */}
         <div className="min-w-0">
           <p className="text-sm font-medium text-slate-500">{label}</p>
-          <p className={`mt-2 text-3xl font-bold ${alert ? 'text-red-600' : 'text-slate-800'}`}>
+          <p className={`mt-2 text-3xl font-bold ${alert ? 'text-red-600' : 'text-navy-700'}`}>
             {value}
           </p>
           {sub && (
@@ -27,16 +25,13 @@ function KpiCard({ label, value, icon: Icon, iconBg, iconColor, sub, subColor, t
             </p>
           )}
         </div>
-
-        {/* Icon */}
         <span className={`shrink-0 rounded-xl p-3 ${iconBg}`}>
           <Icon size={22} className={iconColor} />
         </span>
       </div>
 
-      {/* Arrow hint when clickable */}
       {to && (
-        <div className="mt-4 flex items-center gap-1 text-xs font-medium text-indigo-500">
+        <div className="mt-4 flex items-center gap-1 text-xs font-medium text-orange-500">
           Voir le détail <ArrowRight size={12} />
         </div>
       )}
@@ -52,16 +47,16 @@ function QuickLink({ to, icon: Icon, label, description }) {
   return (
     <Link
       to={to}
-      className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 hover:shadow-md"
+      className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-orange-300 hover:shadow-md group"
     >
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50">
-        <Icon size={20} className="text-indigo-600" />
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-navy-50 group-hover:bg-orange-50 transition-colors">
+        <Icon size={20} className="text-navy-700 group-hover:text-orange-500 transition-colors" />
       </div>
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-slate-800">{label}</p>
+        <p className="text-sm font-semibold text-navy-700">{label}</p>
         <p className="truncate text-xs text-slate-400">{description}</p>
       </div>
-      <ArrowRight size={16} className="ml-auto shrink-0 text-slate-300" />
+      <ArrowRight size={16} className="ml-auto shrink-0 text-slate-300 group-hover:text-orange-400 transition-colors" />
     </Link>
   )
 }
@@ -84,7 +79,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <Loader2 size={36} className="animate-spin text-indigo-400" />
+        <Loader2 size={36} className="animate-spin text-orange-500" />
       </div>
     )
   }
@@ -100,31 +95,27 @@ export default function Dashboard() {
   const isAdmin = stats.scope === 'global'
   const hasLate = stats.late_payments_count > 0
 
-  // ── KPI cards ──────────────────────────────────────────────────────────────
-
   const cards = [
     {
       label: 'Membres actifs',
       value: stats.total_members,
       icon: Users,
-      iconBg: 'bg-indigo-100',
-      iconColor: 'text-indigo-600',
+      iconBg: 'bg-navy-50',
+      iconColor: 'text-navy-700',
       sub: isAdmin ? 'Total du club' : 'Dans votre équipe',
       to: '/membres',
     },
-    // total_teams uniquement pour l'admin (non retourné pour un coach)
     ...(isAdmin
       ? [{
           label: 'Équipes',
           value: stats.total_teams,
           icon: ShieldHalf,
-          iconBg: 'bg-purple-100',
-          iconColor: 'text-purple-600',
+          iconBg: 'bg-brand-blue-50',
+          iconColor: 'text-brand-blue-500',
           sub: 'Équipes actives',
           to: '/equipes',
         }]
       : []),
-    // Revenus : retournés pour admin ET coach (filtrés côté API)
     {
       label: 'Revenus du mois',
       value: `${Number(stats.monthly_revenue).toLocaleString('fr-FR')} MAD`,
@@ -149,26 +140,21 @@ export default function Dashboard() {
       label: 'Entraînements à venir',
       value: stats.upcoming_trainings,
       icon: CalendarCheck,
-      iconBg: 'bg-sky-100',
-      iconColor: 'text-sky-600',
+      iconBg: 'bg-orange-100',
+      iconColor: 'text-orange-500',
       sub: stats.upcoming_trainings > 0 ? 'Séances planifiées' : 'Aucun de planifié',
       to: '/entrainements',
     },
   ]
-
-  // ── Trend line (admin only) ────────────────────────────────────────────────
-  // Affiche un résumé textuel de la santé financière du mois
 
   return (
     <div>
       {/* Header */}
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Tableau de bord</h1>
+          <h1 className="text-2xl font-bold text-navy-700">Tableau de bord</h1>
           <p className="mt-1 text-sm text-slate-500">
-            {isAdmin
-              ? 'Vue globale du club'
-              : `Votre équipe · période ${stats.period}`}
+            {isAdmin ? 'Vue globale du club' : `Votre équipe · période ${stats.period}`}
           </p>
         </div>
         {isAdmin && (
@@ -181,7 +167,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Late payments alert banner */}
+      {/* Late payments alert */}
       {hasLate && (
         <Link
           to="/paiements"
@@ -207,14 +193,14 @@ export default function Dashboard() {
 
       {/* Quick actions */}
       <div className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-slate-400">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
           Accès rapide
         </h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <QuickLink to="/membres/creer" icon={Users} label="Nouveau membre" description="Inscrire un adhérent" />
+          <QuickLink to="/membres/creer"      icon={Users}        label="Nouveau membre"  description="Inscrire un adhérent" />
           {isAdmin && <QuickLink to="/equipes/creer" icon={ShieldHalf} label="Nouvelle équipe" description="Créer une équipe" />}
-          <QuickLink to="/entrainements/creer" icon={CalendarCheck} label="Planifier" description="Ajouter une séance" />
-          <QuickLink to="/paiements/creer" icon={Wallet} label="Paiement" description="Enregistrer une cotisation" />
+          <QuickLink to="/entrainements/creer" icon={CalendarCheck} label="Planifier"        description="Ajouter une séance" />
+          <QuickLink to="/paiements/creer"    icon={Wallet}       label="Paiement"         description="Enregistrer une cotisation" />
         </div>
       </div>
     </div>

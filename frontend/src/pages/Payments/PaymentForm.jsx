@@ -9,7 +9,7 @@ const inputClass = (hasError) =>
     'w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition',
     hasError
       ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
-      : 'border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100',
+      : 'border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-100',
   ].join(' ')
 
 function Field({ label, required, error, hint, children }) {
@@ -237,7 +237,7 @@ export default function PaymentForm() {
             <button
               type="submit"
               disabled={isSubmitting || isLoadingMembers}
-              className="flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50"
+              className="flex items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-600 disabled:opacity-50"
             >
               {isSubmitting && <Loader2 size={15} className="animate-spin" />}
               Enregistrer

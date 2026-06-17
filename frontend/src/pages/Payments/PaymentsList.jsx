@@ -187,7 +187,7 @@ export default function PaymentsList() {
         </div>
         <Link
           to="/paiements/creer"
-          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+          className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
         >
           <Plus size={16} />
           Enregistrer un paiement
@@ -211,7 +211,7 @@ export default function PaymentsList() {
             <button
               key={value}
               onClick={() => handleViewChange(value)}
-              className={`px-4 py-2 font-medium transition ${view === value ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
+              className={`px-4 py-2 font-medium transition ${view === value ? 'bg-orange-500 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
             >
               {label}
               {value === 'late' && overdue?.overdue_count > 0 && (
@@ -227,7 +227,7 @@ export default function PaymentsList() {
         <select
           value={filterMonth}
           onChange={(e) => handleMonthChange(e.target.value)}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm outline-none focus:border-indigo-400"
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm outline-none focus:border-orange-400"
         >
           <option value="">Tous les mois</option>
           {MONTHS_FR.map((m, i) => (
@@ -239,7 +239,7 @@ export default function PaymentsList() {
         <select
           value={filterYear}
           onChange={(e) => handleYearChange(e.target.value)}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm outline-none focus:border-indigo-400"
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm outline-none focus:border-orange-400"
         >
           <option value="">Toutes les années</option>
           {years.map((y) => (
@@ -252,7 +252,7 @@ export default function PaymentsList() {
       <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
         {isLoading ? (
           <div className="flex h-48 items-center justify-center">
-            <Loader2 size={28} className="animate-spin text-indigo-400" />
+            <Loader2 size={28} className="animate-spin text-brand-blue-400" />
           </div>
         ) : payments.length === 0 ? (
           <div className="flex h-48 flex-col items-center justify-center gap-2 text-slate-400">
@@ -281,7 +281,7 @@ export default function PaymentsList() {
                   >
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-2.5">
-                        <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600">
+                        <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-navy-100 text-xs font-bold text-navy-700">
                           {p.member?.full_name?.[0]}
                         </div>
                         <span className="font-medium text-slate-800">{p.member?.full_name}</span>

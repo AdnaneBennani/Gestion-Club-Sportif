@@ -34,17 +34,24 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-sm">
+    <div className="flex min-h-screen items-center justify-center bg-navy-700 px-4">
+      {/* Decorative background circles */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-32 -right-32 size-96 rounded-full bg-orange-500/10" />
+        <div className="absolute -bottom-32 -left-32 size-96 rounded-full bg-brand-blue-500/10" />
+      </div>
+
+      <div className="relative w-full max-w-sm">
         {/* Card */}
-        <div className="rounded-2xl bg-white p-8 shadow-lg ring-1 ring-slate-200">
+        <div className="rounded-2xl bg-white p-8 shadow-2xl">
           {/* Logo */}
-          <div className="mb-8 flex flex-col items-center gap-2">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-md">
-              <ShieldHalf size={28} />
+          <div className="mb-8 flex flex-col items-center gap-3">
+            <div className="flex items-center justify-center rounded-2xl">
+              <img src="/logo.png" alt="" />
             </div>
-            <h1 className="text-xl font-bold text-slate-800">Club Sportif</h1>
-            <p className="text-sm text-slate-500">Connectez-vous à votre espace</p>
+            <div className="text-center">
+              <p className="text-sm text-slate-500">Connectez-vous à votre espace</p>
+            </div>
           </div>
 
           {/* Error */}
@@ -57,7 +64,7 @@ export default function Login() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-1.5 block text-sm font-medium text-navy-700">
                 Adresse e-mail
               </label>
               <input
@@ -65,13 +72,12 @@ export default function Login() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@club.com"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
               />
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-1.5 block text-sm font-medium text-navy-700">
                 Mot de passe
               </label>
               <input
@@ -79,21 +85,25 @@ export default function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
               />
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 disabled:opacity-60"
+              className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-600 active:bg-orange-700 disabled:opacity-60"
             >
               {isLoading && <Loader2 size={16} className="animate-spin" />}
               Se connecter
             </button>
           </form>
         </div>
+
+        {/* Footer hint */}
+        <p className="mt-4 text-center text-xs text-navy-300">
+          © {new Date().getFullYear()} Club Sportif — Tous droits réservés
+        </p>
       </div>
     </div>
   )

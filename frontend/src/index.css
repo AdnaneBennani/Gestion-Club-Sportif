@@ -1,6 +1,50 @@
 @import "tailwindcss";
 
-/* Reset spécifique au projet — Tailwind gère le reste */
+/* ── Thème Club Sportif ──────────────────────────────────────────────────────
+   Couleurs extraites du logo :
+   • Navy   #0B1E34  → navigation, sidebar, titres, structure
+   • Orange #FF7F11  → boutons d'action, badges accent, hover states
+   • Blue   #246EE9  → icônes, éléments graphiques secondaires
+   ──────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Primary — Dark Navy */
+  --color-navy-50:  #e8ecf1;
+  --color-navy-100: #c5d0de;
+  --color-navy-200: #9fb0c8;
+  --color-navy-300: #7890b2;
+  --color-navy-400: #567aa2;
+  --color-navy-500: #2f5a8a;   /* intermédiaire */
+  --color-navy-600: #0d2d50;
+  --color-navy-700: #0B1E34;   /* ← couleur principale logo */
+  --color-navy-800: #091729;
+  --color-navy-900: #06101c;
+
+  /* Accent — Sporty Orange */
+  --color-orange-50:  #fff4e6;
+  --color-orange-100: #ffe3be;
+  --color-orange-200: #ffd093;
+  --color-orange-300: #ffbc67;
+  --color-orange-400: #ffac44;
+  --color-orange-500: #FF7F11;  /* ← couleur accent logo */
+  --color-orange-600: #e06e0a;
+  --color-orange-700: #c05d07;
+  --color-orange-800: #9e4c04;
+  --color-orange-900: #7a3a02;
+
+  /* Secondary — Electric Blue */
+  --color-brand-blue-50:  #e8f0fd;
+  --color-brand-blue-100: #c5d8fb;
+  --color-brand-blue-200: #9cbef8;
+  --color-brand-blue-300: #72a3f5;
+  --color-brand-blue-400: #4d8df1;
+  --color-brand-blue-500: #246EE9;  /* ← couleur secondaire logo */
+  --color-brand-blue-600: #1c5ec8;
+  --color-brand-blue-700: #154ea8;
+  --color-brand-blue-800: #0e3e88;
+  --color-brand-blue-900: #082d68;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
 }

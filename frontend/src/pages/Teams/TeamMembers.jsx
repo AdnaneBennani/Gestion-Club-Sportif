@@ -19,7 +19,7 @@ function MemberChip({ member, action, actionIcon: Icon, actionClass, disabled })
   return (
     <div className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 hover:bg-slate-50">
       <div className="flex min-w-0 items-center gap-2.5">
-        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600">
+        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-navy-100 text-xs font-bold text-navy-700">
           {member.first_name[0]}{member.last_name[0]}
         </div>
         <div className="min-w-0">
@@ -111,7 +111,7 @@ export default function TeamMembers() {
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <Loader2 size={28} className="animate-spin text-indigo-400" />
+        <Loader2 size={28} className="animate-spin text-brand-blue-400" />
       </div>
     )
   }
@@ -128,9 +128,9 @@ export default function TeamMembers() {
         </button>
         <div>
           <div className="flex items-center gap-2">
-            <ShieldHalf size={20} className="text-indigo-500" />
+            <ShieldHalf size={20} className="text-brand-blue-500" />
             <h1 className="text-2xl font-bold text-slate-800">{team?.name}</h1>
-            <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-600">
+            <span className="rounded-full bg-navy-100 px-2.5 py-0.5 text-xs font-medium text-navy-700">
               {team?.category}
             </span>
           </div>
@@ -191,7 +191,7 @@ export default function TeamMembers() {
               <h2 className="text-sm font-semibold text-slate-700">Dans l'équipe</h2>
               <p className="text-xs text-slate-400">{assigned.length} membre(s)</p>
             </div>
-            <UserCheck size={18} className="text-indigo-300" />
+            <UserCheck size={18} className="text-brand-blue-300" />
           </div>
           <div className="min-h-[200px] flex-1 overflow-y-auto px-3 py-2">
             {filteredAssigned.length === 0 ? (
