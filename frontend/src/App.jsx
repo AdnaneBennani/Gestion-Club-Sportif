@@ -3,8 +3,10 @@ import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import MembersList from './pages/Members/MembersList'
+import MemberForm from './pages/Members/MemberForm'
 
-// Placeholder pour les pages à venir
+// Placeholder pour les modules à venir
 function ComingSoon({ title }) {
   return (
     <div className="flex h-64 items-center justify-center">
@@ -27,7 +29,13 @@ export default function App() {
           <Route element={<Layout />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/membres" element={<ComingSoon title="Membres" />} />
+
+            {/* M1 — Membres */}
+            <Route path="/membres" element={<MembersList />} />
+            <Route path="/membres/creer" element={<MemberForm />} />
+            <Route path="/membres/:id/modifier" element={<MemberForm />} />
+
+            {/* Placeholders */}
             <Route path="/equipes" element={<ComingSoon title="Équipes" />} />
             <Route path="/entrainements" element={<ComingSoon title="Entraînements" />} />
             <Route path="/paiements" element={<ComingSoon title="Paiements" />} />
