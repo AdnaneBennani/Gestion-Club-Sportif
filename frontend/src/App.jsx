@@ -8,6 +8,8 @@ import MemberForm from './pages/Members/MemberForm'
 import TeamsList from './pages/Teams/TeamsList'
 import TeamForm from './pages/Teams/TeamForm'
 import TeamMembers from './pages/Teams/TeamMembers'
+import TrainingsList from './pages/Trainings/TrainingsList'
+import TrainingForm from './pages/Trainings/TrainingForm'
 
 function ComingSoon({ title }) {
   return (
@@ -43,8 +45,12 @@ export default function App() {
             <Route path="/equipes/:id/modifier" element={<TeamForm />} />
             <Route path="/equipes/:id/membres" element={<TeamMembers />} />
 
-            {/* Placeholders */}
-            <Route path="/entrainements" element={<ComingSoon title="Entraînements" />} />
+            {/* M3 — Entraînements */}
+            <Route path="/entrainements" element={<TrainingsList />} />
+            <Route path="/entrainements/creer" element={<TrainingForm />} />
+            <Route path="/entrainements/:id/modifier" element={<TrainingForm />} />
+
+            {/* Placeholder */}
             <Route path="/paiements" element={<ComingSoon title="Paiements" />} />
           </Route>
         </Route>
