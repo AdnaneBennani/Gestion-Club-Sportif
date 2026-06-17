@@ -48,8 +48,8 @@ export default function App() {
           </Route>
         </Route>
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        {/* Fallback — redirige vers login (ProtectedRoute prendra le relais si authentifié) */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   )

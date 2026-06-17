@@ -13,8 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->statefulApi();
-        // API is token-only: never redirect unauthenticated requests, return 401 JSON
+        // Token-only API (Bearer) — statefulApi() is intentionally absent.
+        // statefulApi() would make Sanctum treat requests from SANCTUM_STATEFUL_DOMAINS
+        // as SPA cookie sessions and enforce CSRF verification, causing 419 on login.
         $middleware->redirectGuestsTo(fn () => response()->json(['message' => 'Unauthenticated.'], 401));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
