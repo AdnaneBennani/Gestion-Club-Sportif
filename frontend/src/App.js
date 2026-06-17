@@ -1,17 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-    <h1 className="text-3xl font-bold text-red-600">
-      Tailwind fonctionne 🎉
-    </h1>
-      </header>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
