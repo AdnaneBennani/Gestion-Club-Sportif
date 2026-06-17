@@ -59,8 +59,7 @@ export default function Sidebar() {
               <Dumbbell size={18} className="text-white" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900">Club Sportif</p>
-              <p className="text-xs text-gray-500">Gestion</p>
+              <p className="text-sm font-semibold text-gray-900">Gestion Club Sportif</p>
             </div>
           </div>
         </div>
