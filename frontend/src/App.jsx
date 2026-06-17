@@ -10,16 +10,8 @@ import TeamForm from './pages/Teams/TeamForm'
 import TeamMembers from './pages/Teams/TeamMembers'
 import TrainingsList from './pages/Trainings/TrainingsList'
 import TrainingForm from './pages/Trainings/TrainingForm'
-
-function ComingSoon({ title }) {
-  return (
-    <div className="flex h-64 items-center justify-center">
-      <p className="text-slate-400 text-sm">
-        <span className="font-semibold text-slate-600">{title}</span> — à venir
-      </p>
-    </div>
-  )
-}
+import PaymentsList from './pages/Payments/PaymentsList'
+import PaymentForm from './pages/Payments/PaymentForm'
 
 export default function App() {
   return (
@@ -50,8 +42,9 @@ export default function App() {
             <Route path="/entrainements/creer" element={<TrainingForm />} />
             <Route path="/entrainements/:id/modifier" element={<TrainingForm />} />
 
-            {/* Placeholder */}
-            <Route path="/paiements" element={<ComingSoon title="Paiements" />} />
+            {/* M4 — Paiements */}
+            <Route path="/paiements" element={<PaymentsList />} />
+            <Route path="/paiements/creer" element={<PaymentForm />} />
           </Route>
         </Route>
 
