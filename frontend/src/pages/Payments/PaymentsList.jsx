@@ -21,13 +21,98 @@ const STATUS = {
   },
 }
 
-function StatusBadge({ status }) {
+const PAYMENT_METHODS = ['Espèces', 'Virement', 'Chèque', 'Carte bancaire']
+
+function StatusBadge({ status, paymentId, onStatusChange, isUpdating }) {
+  const [showDropdown, setShowDropdown] = useState(false)
   const s = STATUS[status] ?? STATUS.paid
+
+  const handleStatusChange = async (newStatus) => {
+    if (newStatus === status) {
+      setShowDropdown(false)
+      return
+    }
+    await onStatusChange(paymentId, newStatus)
+    setShowDropdown(false)
+  }
+
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${s.cls}`}>
-      {s.icon}
-      {s.label}
-    </span>
+    <div className="relative inline-block">
+      <button
+        onClick={() => setShowDropdown(!showDropdown)}
+        disabled={isUpdating}
+        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold cursor-pointer hover:opacity-80 disabled:opacity-50 ${s.cls}`}
+      >
+        {s.icon}
+        {s.label}
+      </button>
+      {showDropdown && (
+        <div className="absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-10 min-w-max">
+          {Object.entries(STATUS).map(([key, value]) => (
+            <button
+              key={key}
+              onClick={() => handleStatusChange(key)}
+              disabled={isUpdating}
+              className={`block w-full text-left px-3 py-2 text-sm hover:bg-slate-50 disabled:opacity-50 ${
+                key === status ? 'bg-slate-100 font-semibold' : ''
+              }`}
+            >
+              {value.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function PaymentMethodBadge({ method, paymentId, onMethodChange, isUpdating }) {
+  const [showDropdown, setShowDropdown] = useState(false)
+
+  const handleMethodChange = async (newMethod) => {
+    if (newMethod === method) {
+      setShowDropdown(false)
+      return
+    }
+    await onMethodChange(paymentId, newMethod)
+    setShowDropdown(false)
+  }
+
+  return (
+    <div className="relative inline-block">
+      <button
+        onClick={() => setShowDropdown(!showDropdown)}
+        disabled={isUpdating}
+        className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold cursor-pointer bg-blue-100 text-blue-700 hover:opacity-80 disabled:opacity-50"
+      >
+        {method || <span className="text-slate-400">—</span>}
+      </button>
+      {showDropdown && (
+        <div className="absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-10 min-w-max">
+          <button
+            onClick={() => handleMethodChange(null)}
+            disabled={isUpdating}
+            className={`block w-full text-left px-3 py-2 text-sm hover:bg-slate-50 disabled:opacity-50 ${
+              !method ? 'bg-slate-100 font-semibold' : ''
+            }`}
+          >
+            Aucune
+          </button>
+          {PAYMENT_METHODS.map((m) => (
+            <button
+              key={m}
+              onClick={() => handleMethodChange(m)}
+              disabled={isUpdating}
+              className={`block w-full text-left px-3 py-2 text-sm hover:bg-slate-50 disabled:opacity-50 ${
+                m === method ? 'bg-slate-100 font-semibold' : ''
+              }`}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -115,6 +200,7 @@ export default function PaymentsList() {
   const [isLoading, setIsLoading] = useState(true)
   const [toDelete, setToDelete] = useState(null)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isUpdatingPaymentId, setIsUpdatingPaymentId] = useState(null)
 
   const currentYear = new Date().getFullYear()
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i)
@@ -172,6 +258,27 @@ export default function PaymentsList() {
       paymentService.getOverdue().then(setOverdue).catch(() => {})
     } finally {
       setIsDeleting(false)
+    }
+  }
+
+  async function handleStatusChange(paymentId, newStatus) {
+    setIsUpdatingPaymentId(paymentId)
+    try {
+      await paymentService.update(paymentId, { status: newStatus })
+      load(page, view, filterMonth, filterYear)
+      paymentService.getOverdue().then(setOverdue).catch(() => {})
+    } finally {
+      setIsUpdatingPaymentId(null)
+    }
+  }
+
+  async function handleMethodChange(paymentId, newMethod) {
+    setIsUpdatingPaymentId(paymentId)
+    try {
+      await paymentService.update(paymentId, { payment_method: newMethod })
+      load(page, view, filterMonth, filterYear)
+    } finally {
+      setIsUpdatingPaymentId(null)
     }
   }
 
@@ -295,10 +402,20 @@ export default function PaymentsList() {
                       {Number(p.amount).toLocaleString('fr-FR')} MAD
                     </td>
                     <td className="px-5 py-3.5 text-slate-500">
-                      {p.payment_method ?? <span className="text-slate-300">—</span>}
+                      <PaymentMethodBadge
+                        method={p.payment_method}
+                        paymentId={p.id}
+                        onMethodChange={handleMethodChange}
+                        isUpdating={isUpdatingPaymentId === p.id}
+                      />
                     </td>
                     <td className="px-5 py-3.5">
-                      <StatusBadge status={p.status} />
+                      <StatusBadge
+                        status={p.status}
+                        paymentId={p.id}
+                        onStatusChange={handleStatusChange}
+                        isUpdating={isUpdatingPaymentId === p.id}
+                      />
                     </td>
                     <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end">

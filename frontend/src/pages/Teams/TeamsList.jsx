@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { Plus, Pencil, Trash2, Users, Loader2, ShieldHalf } from 'lucide-react'
 import { teamService } from '../../services/teamService'
+import { useAuth } from '../../context/AuthContext'
 
 function ConfirmDialog({ name, membersCount, onConfirm, onCancel, isDeleting }) {
   return (
@@ -64,6 +65,9 @@ function CategoryBadge({ category }) {
 
 export default function TeamsList() {
   const navigate = useNavigate()
+  const { user } = useAuth()
+  const isCoach = user?.role === 'coach'
+
   const [teams, setTeams] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [toDelete, setToDelete] = useState(null)
@@ -106,13 +110,15 @@ export default function TeamsList() {
             {teams.length} équipe{teams.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <Link
-          to="/equipes/creer"
-          className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
-        >
-          <Plus size={16} />
-          Nouvelle équipe
-        </Link>
+        {!isCoach && (
+          <Link
+            to="/equipes/creer"
+            className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
+          >
+            <Plus size={16} />
+            Nouvelle équipe
+          </Link>
+        )}
       </div>
 
       {/* Content */}
@@ -177,20 +183,24 @@ export default function TeamsList() {
                         >
                           <Users size={15} />
                         </button>
-                        <button
-                          onClick={() => navigate(`/equipes/${team.id}/modifier`)}
-                          className="rounded-lg p-1.5 text-slate-400 hover:bg-navy-50 hover:text-navy-700"
-                          title="Modifier"
-                        >
-                          <Pencil size={15} />
-                        </button>
-                        <button
-                          onClick={() => { setDeleteError(null); setToDelete(team) }}
-                          className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-500"
-                          title="Supprimer"
-                        >
-                          <Trash2 size={15} />
-                        </button>
+                        {!isCoach && (
+                          <>
+                            <button
+                              onClick={() => navigate(`/equipes/${team.id}/modifier`)}
+                              className="rounded-lg p-1.5 text-slate-400 hover:bg-navy-50 hover:text-navy-700"
+                              title="Modifier"
+                            >
+                              <Pencil size={15} />
+                            </button>
+                            <button
+                              onClick={() => { setDeleteError(null); setToDelete(team) }}
+                              className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-500"
+                              title="Supprimer"
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>

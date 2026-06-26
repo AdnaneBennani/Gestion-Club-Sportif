@@ -8,6 +8,7 @@ import {
   LogOut,
   Menu,
   X,
+  Lock,
 } from 'lucide-react'
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
@@ -17,7 +18,14 @@ const NAV_ITEMS = [
   { to: '/membres',        label: 'Membres',         icon: Users },
   { to: '/equipes',        label: 'Équipes',          icon: ShieldHalf },
   { to: '/entrainements',  label: 'Entraînements',   icon: Dumbbell },
+]
+
+const ADMIN_ONLY_NAV_ITEMS = [
   { to: '/paiements',      label: 'Paiements',        icon: CreditCard },
+]
+
+const ADMIN_NAV_ITEMS = [
+  { to: '/utilisateurs',   label: 'Gestion des accès', icon: Lock },
 ]
 
 function NavItem({ to, label, icon: Icon }) {
@@ -65,6 +73,17 @@ export default function Layout() {
         {NAV_ITEMS.map((item) => (
           <NavItem key={item.to} {...item} />
         ))}
+        {user?.role === 'admin' && (
+          <>
+            <div className="my-3 border-t border-navy-600" />
+            {ADMIN_ONLY_NAV_ITEMS.map((item) => (
+              <NavItem key={item.to} {...item} />
+            ))}
+            {ADMIN_NAV_ITEMS.map((item) => (
+              <NavItem key={item.to} {...item} />
+            ))}
+          </>
+        )}
       </nav>
 
       {/* User + logout */}

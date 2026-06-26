@@ -56,10 +56,10 @@ class TeamPolicy
         return false;
     }
 
-    /** Admin-only — member assignment is a structural operation. */
+    /** Admin + Coach (for their own team) — member assignment. */
     public function syncMembers(User $user, Team $team): bool
     {
-        return false;
+        return $user->isCoach() && $user->team_id === $team->id;
     }
 
     public function restore(User $user, Team $team): bool

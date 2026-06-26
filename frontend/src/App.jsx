@@ -12,6 +12,8 @@ import TrainingsList from './pages/Trainings/TrainingsList'
 import TrainingForm from './pages/Trainings/TrainingForm'
 import PaymentsList from './pages/Payments/PaymentsList'
 import PaymentForm from './pages/Payments/PaymentForm'
+import UsersList from './pages/Users/UsersList'
+import UserForm from './pages/Users/UserForm'
 
 export default function App() {
   return (
@@ -45,6 +47,11 @@ export default function App() {
             {/* M4 — Paiements */}
             <Route path="/paiements" element={<PaymentsList />} />
             <Route path="/paiements/creer" element={<PaymentForm />} />
+
+            {/* M0 — Utilisateurs (admin only) */}
+            <Route path="/utilisateurs" element={<UsersList />} />
+            <Route path="/utilisateurs/creer" element={<UserForm />} />
+            <Route path="/utilisateurs/:id/modifier" element={<UserForm />} />
           </Route>
         </Route>
 

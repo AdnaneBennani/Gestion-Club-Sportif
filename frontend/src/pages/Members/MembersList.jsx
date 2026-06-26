@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { Plus, Search, Pencil, Trash2, Loader2, ChevronLeft, ChevronRight, UserX } from 'lucide-react'
 import { memberService } from '../../services/memberService'
+import { useAuth } from '../../context/AuthContext'
 
 function ConfirmDialog({ name, onConfirm, onCancel, isDeleting }) {
   return (
@@ -39,6 +40,8 @@ function ConfirmDialog({ name, onConfirm, onCancel, isDeleting }) {
 
 export default function MembersList() {
   const navigate = useNavigate()
+  const { user } = useAuth()
+  const isCoach = user?.role === 'coach'
 
   const [members, setMembers] = useState([])
   const [meta, setMeta] = useState(null)
@@ -104,13 +107,15 @@ export default function MembersList() {
             {meta ? `${meta.total} membre${meta.total !== 1 ? 's' : ''} au total` : ''}
           </p>
         </div>
-        <Link
-          to="/membres/creer"
-          className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
-        >
-          <Plus size={16} />
-          Ajouter un membre
-        </Link>
+        {!isCoach && (
+          <Link
+            to="/membres/creer"
+            className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
+          >
+            <Plus size={16} />
+            Ajouter un membre
+          </Link>
+        )}
       </div>
 
       {/* Search bar */}
@@ -170,20 +175,33 @@ export default function MembersList() {
                     </td>
                     <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => navigate(`/membres/${m.id}/modifier`)}
-                          className="rounded-lg p-1.5 text-slate-400 hover:bg-navy-50 hover:text-navy-700"
-                          title="Modifier"
-                        >
-                          <Pencil size={15} />
-                        </button>
-                        <button
-                          onClick={() => setToDelete({ id: m.id, name: m.full_name })}
-                          className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-500"
-                          title="Supprimer"
-                        >
-                          <Trash2 size={15} />
-                        </button>
+                        {!isCoach && (
+                          <>
+                            <button
+                              onClick={() => navigate(`/membres/${m.id}/modifier`)}
+                              className="rounded-lg p-1.5 text-slate-400 hover:bg-navy-50 hover:text-navy-700"
+                              title="Modifier"
+                            >
+                              <Pencil size={15} />
+                            </button>
+                            <button
+                              onClick={() => setToDelete({ id: m.id, name: m.full_name })}
+                              className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-500"
+                              title="Supprimer"
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </>
+                        )}
+                        {isCoach && (
+                          <button
+                            onClick={() => navigate(`/equipes/${user.team_id}/membres`)}
+                            className="rounded-lg p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600"
+                            title="Gérer l'assignation à l'équipe"
+                          >
+                            <UserX size={15} />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

@@ -75,8 +75,6 @@ class DashboardController extends Controller
 
     private function coachStats(User $user, Carbon $now): array
     {
-        $month = $now->month;
-        $year = $now->year;
         $teamId = $user->team_id;
 
         // Members belonging to the coach's team
@@ -84,22 +82,6 @@ class DashboardController extends Controller
             'teams',
             fn ($q) => $q->where('teams.id', $teamId)
         )->count();
-
-        // monthly_revenue for members of this team
-        $monthlyRevenue = Payment::where('status', 'paid')
-            ->where('month', $month)
-            ->where('year', $year)
-            ->whereHas(
-                'member.teams',
-                fn ($q) => $q->where('teams.id', $teamId)
-            )->sum('amount');
-
-        // late payments for members of this team
-        $latePaymentsCount = Payment::where('status', 'late')
-            ->whereHas(
-                'member.teams',
-                fn ($q) => $q->where('teams.id', $teamId)
-            )->count();
 
         // upcoming trainings for this team only
         $upcomingTrainings = Training::where('team_id', $teamId)
@@ -109,10 +91,8 @@ class DashboardController extends Controller
         return [
             'scope' => 'team',
             'team_id' => $teamId,
-            'period' => sprintf('%02d/%d', $month, $year),
+            'period' => sprintf('%02d/%d', $now->month, $now->year),
             'total_members' => $totalMembers,
-            'monthly_revenue' => (float) $monthlyRevenue,
-            'late_payments_count' => $latePaymentsCount,
             'upcoming_trainings' => $upcomingTrainings,
         ];
     }

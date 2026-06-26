@@ -6,6 +6,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // v1 — Business modules
     Route::prefix('v1')->group(function () {
+
+        // M0 — Users (admin: full CRUD)
+        Route::apiResource('users', UserController::class);
 
         // M1 — Members (admin: full CRUD | coach: index + show filtered to own team)
         Route::apiResource('members', MemberController::class);

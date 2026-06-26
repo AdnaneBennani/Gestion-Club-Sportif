@@ -116,26 +116,30 @@ export default function Dashboard() {
           to: '/equipes',
         }]
       : []),
-    {
-      label: 'Revenus du mois',
-      value: `${Number(stats.monthly_revenue).toLocaleString('fr-FR')} MAD`,
-      icon: Wallet,
-      iconBg: 'bg-emerald-100',
-      iconColor: 'text-emerald-600',
-      sub: `Période ${stats.period}`,
-      subColor: 'text-emerald-500',
-    },
-    {
-      label: 'Retards de paiement',
-      value: stats.late_payments_count,
-      icon: AlertTriangle,
-      iconBg: hasLate ? 'bg-red-100' : 'bg-slate-100',
-      iconColor: hasLate ? 'text-red-500' : 'text-slate-400',
-      sub: hasLate ? 'Action requise' : 'Tout est à jour',
-      subColor: hasLate ? 'text-red-500 font-semibold' : 'text-slate-400',
-      alert: hasLate,
-      to: hasLate ? '/paiements' : undefined,
-    },
+    ...(isAdmin
+      ? [
+          {
+            label: 'Revenus du mois',
+            value: `${Number(stats.monthly_revenue).toLocaleString('fr-FR')} MAD`,
+            icon: Wallet,
+            iconBg: 'bg-emerald-100',
+            iconColor: 'text-emerald-600',
+            sub: `Période ${stats.period}`,
+            subColor: 'text-emerald-500',
+          },
+          {
+            label: 'Retards de paiement',
+            value: stats.late_payments_count,
+            icon: AlertTriangle,
+            iconBg: hasLate ? 'bg-red-100' : 'bg-slate-100',
+            iconColor: hasLate ? 'text-red-500' : 'text-slate-400',
+            sub: hasLate ? 'Action requise' : 'Tout est à jour',
+            subColor: hasLate ? 'text-red-500 font-semibold' : 'text-slate-400',
+            alert: hasLate,
+            to: hasLate ? '/paiements' : undefined,
+          },
+        ]
+      : []),
     {
       label: 'Entraînements à venir',
       value: stats.upcoming_trainings,
@@ -168,7 +172,7 @@ export default function Dashboard() {
       </div>
 
       {/* Late payments alert */}
-      {hasLate && (
+      {isAdmin && hasLate && (
         <Link
           to="/paiements"
           className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-red-200 bg-red-50 px-5 py-4 transition hover:bg-red-100"
@@ -176,8 +180,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3">
             <AlertTriangle size={20} className="shrink-0 text-red-500" />
             <p className="text-sm font-medium text-red-700">
-              {stats.late_payments_count} paiement{stats.late_payments_count > 1 ? 's' : ''} en retard
-              {isAdmin ? ' dans le club' : ' dans votre équipe'} — cliquez pour consulter
+              {stats.late_payments_count} paiement{stats.late_payments_count > 1 ? 's' : ''} en retard dans le club — cliquez pour consulter
             </p>
           </div>
           <ArrowRight size={16} className="shrink-0 text-red-400" />
@@ -200,7 +203,7 @@ export default function Dashboard() {
           <QuickLink to="/membres/creer"      icon={Users}        label="Nouveau membre"  description="Inscrire un adhérent" />
           {isAdmin && <QuickLink to="/equipes/creer" icon={ShieldHalf} label="Nouvelle équipe" description="Créer une équipe" />}
           <QuickLink to="/entrainements/creer" icon={CalendarCheck} label="Planifier"        description="Ajouter une séance" />
-          <QuickLink to="/paiements/creer"    icon={Wallet}       label="Paiement"         description="Enregistrer une cotisation" />
+          {isAdmin && <QuickLink to="/paiements/creer"    icon={Wallet}       label="Paiement"         description="Enregistrer une cotisation" />}
         </div>
       </div>
     </div>

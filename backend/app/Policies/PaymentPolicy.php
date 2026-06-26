@@ -25,7 +25,7 @@ class PaymentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isCoach();
+        return false;
     }
 
     /**
