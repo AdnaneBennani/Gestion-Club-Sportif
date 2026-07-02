@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PFE - Gestion Club Sportif</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <h1>PFE</h1>
+          <p>Gestion Club Sportif</p>
+        </div>
+        <nav id="toc"></nav>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button id="toggleMenu" class="btn ghost">☰</button>
+          <div class="progress-wrap">
+            <div id="progress" class="progress"></div>
+          </div>
+          <div class="counter" id="counter">1 / 1</div>
+        </header>
+
+        <section id="slides" class="slides"></section>
+
+        <footer class="controls">
+          <button id="prevBtn" class="btn">◀ Précédent</button>
+          <button id="nextBtn" class="btn primary">Suivant ▶</button>
+        </footer>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
